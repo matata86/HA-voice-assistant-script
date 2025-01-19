@@ -1,0 +1,39 @@
+description: Starts vacuuming in a specific room based on the room name.
+fields:
+  room:
+    description: >-
+      The name of the area to be cleaned by the vacuum (Bedroom, Living room,
+      Kitchen, Lobby, Office, Kidsroom, Bathroom, Balcon).
+    example: Office
+variables:
+  room_id: |-
+    {% if room == 'Bedroom' or room == 'Ložnice' %}
+      20
+    {% elif room == 'Living room' or room == 'Obývací pokoj' %}
+      19
+    {% elif room == 'Kitchen' or room == 'Kuchyně' %}
+      22
+    {% elif room == 'Lobby' or room == 'Předsíň' %}
+      17
+    {% elif room == 'Office' or room == 'Pracovna' %}
+      21
+    {% elif room == 'Kids room' or room == 'Dětský pokoj' %}
+      16
+    {% elif room == 'Bathroom' or room == 'Koupelna' %}
+      100
+    {% elif room == 'Balcon' or room == 'Balkón' %}
+      0
+    {% else %}
+      99
+    {% endif %}
+sequence:
+  - action: input_number.set_value
+    metadata: {}
+    data:
+      value: "{{ room_id }}"
+    target:
+      entity_id: input_number.vacuum_clean_area
+alias: "[AI] vacuum_clean_room"
+icon: mdi:robot-vacuum
+mode: queued
+max: 10
