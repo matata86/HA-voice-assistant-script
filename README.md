@@ -139,6 +139,11 @@ Marks an item on a to-do or tasks list as completed.
 ---
 
 ## Contribution
+
+### Authors
+- [matata86](https://github.com/matata86)
+- [fsecko1](https://github.com/fsecko1)
+
 Feel free to open issues or create pull requests for improvements or new scripts.
 
 ---
