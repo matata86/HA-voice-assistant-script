@@ -1,6 +1,18 @@
-# Home Assistant Custom Scripts
+# HA Voice assist Custom Scripts
 
-This repository contains custom scripts for Home Assistant that extend its functionality. These scripts are designed to simplify and automate various tasks, such as controlling devices, fetching calendar events, and managing a vacuum cleaner.
+This repository contains custom scripts for Home Assistant that extend its functionality. These scripts are designed to simplify and automate tasks such as controlling devices, managing calendars, and controlling a vacuum cleaner.
+
+---
+
+## Setup Overview
+
+This repository is optimized for the following setup:
+
+- **Speech-to-Text (STT):** Home Assistant Cloud.  
+- **Text-to-Speech (TTS):** Home Assistant Cloud.  
+- **Conversation Agent:** ChatGPT integrated into Home Assistant for advanced conversational capabilities.
+
+This configuration ensures seamless voice control and natural language understanding for your smart home automation.
 
 ---
 
@@ -17,8 +29,13 @@ Creates a calendar event for a specific calendar entity.
 | `start_date_time` | Start time of the event.            | `2025-12-31 10:00:00` |
 | `end_date_time`   | End time of the event.              | `2025-12-31 11:00:00` |
 
-**Usage:**  
-Copy the script into your `scripts.yaml` or add it as a standalone script. Customize the entity ID and use it to schedule events.
+**Important Note:**  
+If you are using the GPT-4o-Mini model, you must specify the exact date and time for the event. For example:
+- Instead of saying: "Create an event for next Monday."
+- Provide a detailed request: "Create a calendar event on Monday, January 20th, where I have a meeting with Mrs. Nováková at 4 PM."
+
+**Example Command:**  
+"Jaký je můj program v pondělí 20.1.?"
 
 ---
 
@@ -32,23 +49,22 @@ Sets the temperature for a specific climate device.
 | `entityid`    | The entity ID of the climate device to update. | `thermo_livingroom` |
 | `temperature` | The temperature (between 0 and 30) to set.     | `20`                |
 
-**Usage:**  
-Add the script to your Home Assistant configuration and call it with the required `entityid` and `temperature`.
+**Example Command:**  
+"Nastav teplotu v pracovně na 23 stupňů."
 
 ---
 
-### 3. **[AI] vacuum_clean_room**
+### 3. **[AI] vacuum_clean_room (Single Room)**
 **Description:**  
-Starts vacuuming in a specific room based on the room name.
+Starts vacuuming in a single room based on the room name.
 
 **Fields:**  
 | Field   | Description                                                      | Example  |
 |---------|------------------------------------------------------------------|----------|
 | `room`  | The name of the room to clean (e.g., Bedroom, Kitchen, Office).  | `Office` |
 
-**Dependencies:**  
-- **Home Assistant Helper:** Create an `input_number` entity named `input_number.vacuum_clean_area`.
-- **Node-RED Flow:** Import the provided Node-RED flow to handle room ID mapping and segment cleaning.
+**Functionality:**  
+- The script directly sends a cleaning command to the vacuum cleaner for the specified room.
 
 **Rooms and IDs:**  
 | Room Name       | Room ID |
@@ -62,12 +78,34 @@ Starts vacuuming in a specific room based on the room name.
 | Bathroom         | 100     |
 | Balcon           | 0       |
 
-**Usage:**  
-Call the script with the desired room name. Node-RED will trigger the vacuum cleaner for the specified room.
+**Example Command:**  
+"Pošli vysavač do ložnice."
 
 ---
 
-### 4. **[AI] get_calendar_events**
+### 4. **[AI] vacuum_clean_multiroom**
+**Description:**  
+Starts vacuuming in multiple rooms sequentially, based on provided room names.
+
+**Fields:**  
+| Field   | Description                                                      | Example          |
+|---------|------------------------------------------------------------------|------------------|
+| `rooms` | A list of room names to clean (e.g., Bedroom, Kitchen, Office).  | `["Office", "Kitchen"]` |
+
+**Dependencies:**  
+- **Home Assistant Helper:** Create an `input_number` entity named `input_number.vacuum_clean_area`.
+- **Node-RED Flow:** Import the provided Node-RED flow to handle room ID mapping and segment cleaning.
+
+**Functionality:**  
+- Processes multiple rooms and sends cleaning commands to the vacuum cleaner for each specified room.
+- Resets the helper value after the cleaning sequence is completed.
+
+**Example Command:**  
+"Pošli vysavač do ložnice a kuchyně."
+
+---
+
+### 5. **[AI] get_calendar_events**
 **Description:**  
 Fetches and lists calendar events for a specified date range.
 
@@ -77,31 +115,28 @@ Fetches and lists calendar events for a specified date range.
 | `start_date`| Start of the period (ISO format datetime string). Required.              | `2025-01-19T08:00:00`    |
 | `end_date`  | End of the period (ISO format datetime string). Required.                | `2025-01-19T18:00:00`    |
 
-**Functionality:**  
-- Retrieves events from a specified calendar entity (`calendar.diar` by default).
-- Lists events in the format: `HH:MM Event Title`.
-- If no events are found, returns "No events".
-
-**Usage:**  
-Copy the script into your `scripts.yaml` and invoke it with `start_date` and `end_date`.
+**Example Command:**  
+"Jaký je můj program v pondělí 20.1.?"
 
 ---
 
 ## Setup Instructions
 
+### General Setup
 1. **Script Installation:**
-   - Copy the `.yaml` files from this repository to your Home Assistant configuration.
-   - Place them in the `scripts.yaml` or use a separate directory for custom scripts.
+   - Copy the `.yaml` files into your Home Assistant configuration.
+   - Place them in the `scripts.yaml` or use a dedicated directory.
 
-2. **Node-RED Setup (for vacuum scripts):**
-   - Import the provided Node-RED flow for managing room cleaning.
-
-3. **Entities Required:**
-   - `calendar.diar`: Calendar entity for event-related scripts.
-   - `input_number.vacuum_clean_area`: Helper for vacuum room selection.
-
-4. **Adjustments:**
+2. **Adjustments:**
    - Replace placeholder entity IDs with your actual device/entity IDs in the scripts.
+
+### Multi-Room Vacuum Script Setup
+1. **Home Assistant Helper:**
+   - Create an `input_number` entity named `input_number.vacuum_clean_area`.
+
+2. **Node-RED Setup:**
+   - Import the provided Node-RED flow.
+   - Ensure the flow manages `input_number.vacuum_clean_area` for multi-room cleaning.
 
 ---
 
