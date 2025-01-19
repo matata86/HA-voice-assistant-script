@@ -1,0 +1,20 @@
+description: >-
+  A script to set the temperature for a specific climate device via its
+  entity_id. Use this if the temperature should be set and determine the
+  correct entity_id from the available entities.
+fields:
+  entityid:
+    description: The entity id that should be used.
+    example: thermo_livingroom
+  temperature:
+    description: The temperature between 0 and 30 that should be set for the area.
+    example: 20
+sequence:
+  - action: climate.set_temperature
+    metadata: {}
+    data:
+      temperature: "{{ temperature }}"
+    target:
+      entity_id: "{{ entityid }}"
+alias: "set_temperature_entity"
+icon: mdi:oil-temperature
