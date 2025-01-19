@@ -1,0 +1,28 @@
+intent_script:
+  GetItemsFromTodoList:
+    description: "Returns items that the user has not yet completed on their todo/tasks list. Before running make sure the user has specified the list they would like to retrieve. You must fill the name slot {'name': 'name of a todo entity'}. If you do not fill this slot the intent will fail to run."
+    action:
+      - action: todo.get_items
+        metadata: {}
+        data:
+          status: needs_action
+        target:
+          entity_id: "{{ states.todo | selectattr('name', 'in', name) | map(attribute='entity_id') | list | first | default }}"
+        response_variable: result # get action response
+      - stop: ""
+        response_variable: result # and return it
+    speech:
+      text: "Remaining Tasks: {{ action_response[states.todo | selectattr('name', 'in', name) | map(attribute='entity_id') | list | first | default]['items'] | map(attribute='summary') | list | join(', ') }}"
+
+  CompleteItemOnTodoList:
+    description: "Marks and item on todo/tasks list as completed. You must fill the following slots {'name': 'name of todo entity', 'item': 'name of item on list'}. If you do not fill this slot the intent will fail to run." # A list of all tasks must be fetched before your allowed to mark any off, do this by runing the GetItemsFromTodoList itent. You must fill the following slots {'name': 'name of todo entity', 'item': 'name of item on list'}. If you do not fill this slot the intent will fail to run."
+    action:
+      - action: todo.update_item
+        metadata: {}
+        data:
+          item: "{{ item }}"
+          status: completed
+        target:
+          entity_id: "{{ states.todo | selectattr('name', 'in', name) | map(attribute='entity_id') | list | first | default }}"
+    speech:
+      text: "marked as completed"
