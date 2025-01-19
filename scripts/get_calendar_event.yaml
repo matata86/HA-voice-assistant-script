@@ -1,0 +1,55 @@
+description: A script to fetch and list calendar events for a specified date range.
+fields:
+  start_date:
+    selector:
+      datetime: null
+    name: Start date time
+    description: >-
+      Start of the period for which the calendar entries are requested. Use an
+      ISO format datetime string.
+    required: true
+  end_date:
+    selector:
+      datetime: null
+    name: End date time
+    required: true
+    description: >-
+      End of the period for which the calendar entries are requested. Use an
+      ISO format datetime string.
+sequence:
+  - variables:
+      version: 1.1
+      start: "{{ (start_date | as_datetime | as_local).isoformat() }}"
+      end: >
+        {% set start = as_datetime(start) %}
+        {% set day = start.time() == today_at().time() %}
+        {% set delta = timedelta(days=1 if day else 0, hours=0 if day else 1) %}
+        {% set end = end_date |
+          as_datetime(default=start+delta) | as_local %}
+        {{ (end if end > start else start + delta).isoformat() }}
+  - data:
+      entity_id: calendar.diar
+      start_date_time: "{{ start }}"
+      end_date_time: "{{ end }}"
+    response_variable: response
+    action: calendar.get_events
+  - variables:
+      result:
+        events: |-
+          {% set event_list = response.values()
+              | map(attribute='events')
+              | sum(start=[])
+              | sort(attribute='start') %}
+          {% if event_list|length > 0 %}
+            {% for event in event_list %}
+              {% set start_time = (event.start|as_datetime|as_local).strftime("%H:%M") %}
+              {% set title = event.summary %}
+              {{ start_time }} {{ title }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+          {% else %}
+            No events
+          {% endif %}
+  - stop: ""
+    response_variable: result
+alias: "[AI] get_calendar_events"
+icon: mdi:calendar
