@@ -1,6 +1,6 @@
-# HA Voice assist Custom Scripts
+# HA Voice Assist Custom Scripts
 
-This repository contains custom scripts for Home Assistant that extend its functionality. These scripts are designed to simplify and automate tasks such as controlling devices, managing calendars, and controlling a vacuum cleaner.
+This repository contains custom scripts for Home Assistant that extend its functionality. These scripts are designed to simplify and automate tasks such as controlling devices, managing calendars, controlling a vacuum cleaner, and managing a to-do list, fully optimized for voice assistants.
 
 ---
 
@@ -35,7 +35,7 @@ If you are using the GPT-4o-Mini model, you must specify the exact date and time
 - Provide a detailed request: "Create a calendar event on Monday, January 20th, where I have a meeting with Mrs. Nováková at 4 PM."
 
 **Example Command:**  
-"Jaký je můj program v pondělí 20.1.?"
+"Create a calendar event on Monday, January 20th, at 4 PM for a meeting with Mrs. Nováková."
 
 ---
 
@@ -50,7 +50,7 @@ Sets the temperature for a specific climate device.
 | `temperature` | The temperature (between 0 and 30) to set.     | `20`                |
 
 **Example Command:**  
-"Nastav teplotu v pracovně na 23 stupňů."
+"Set the temperature in the office to 23 degrees."
 
 ---
 
@@ -63,23 +63,8 @@ Starts vacuuming in a single room based on the room name.
 |---------|------------------------------------------------------------------|----------|
 | `room`  | The name of the room to clean (e.g., Bedroom, Kitchen, Office).  | `Office` |
 
-**Functionality:**  
-- The script directly sends a cleaning command to the vacuum cleaner for the specified room.
-
-**Rooms and IDs:**  
-| Room Name       | Room ID |
-|------------------|---------|
-| Bedroom          | 20      |
-| Living room      | 19      |
-| Kitchen          | 22      |
-| Lobby            | 17      |
-| Office           | 21      |
-| Kids room        | 16      |
-| Bathroom         | 100     |
-| Balcon           | 0       |
-
 **Example Command:**  
-"Pošli vysavač do ložnice."
+"Send the vacuum to the bedroom."
 
 ---
 
@@ -92,16 +77,8 @@ Starts vacuuming in multiple rooms sequentially, based on provided room names.
 |---------|------------------------------------------------------------------|------------------|
 | `rooms` | A list of room names to clean (e.g., Bedroom, Kitchen, Office).  | `["Office", "Kitchen"]` |
 
-**Dependencies:**  
-- **Home Assistant Helper:** Create an `input_number` entity named `input_number.vacuum_clean_area`.
-- **Node-RED Flow:** Import the provided Node-RED flow to handle room ID mapping and segment cleaning.
-
-**Functionality:**  
-- Processes multiple rooms and sends cleaning commands to the vacuum cleaner for each specified room.
-- Resets the helper value after the cleaning sequence is completed.
-
 **Example Command:**  
-"Pošli vysavač do ložnice a kuchyně."
+"Send the vacuum to the bedroom and kitchen."
 
 ---
 
@@ -116,7 +93,36 @@ Fetches and lists calendar events for a specified date range.
 | `end_date`  | End of the period (ISO format datetime string). Required.                | `2025-01-19T18:00:00`    |
 
 **Example Command:**  
-"Jaký je můj program v pondělí 20.1.?"
+"What is my schedule for Monday, January 20th?"
+
+---
+
+### 6. **[AI] GetItemsFromTodoList**
+**Description:**  
+Returns items that the user has not yet completed on their to-do or tasks list.
+
+**Fields:**  
+| Field | Description                      | Example                |
+|-------|----------------------------------|------------------------|
+| `name`| The name of the to-do list entity. | `my_todo_list_entity` |
+
+**Example Command:**  
+"What tasks are remaining on my to-do list?"
+
+---
+
+### 7. **[AI] CompleteItemOnTodoList**
+**Description:**  
+Marks an item on a to-do or tasks list as completed.
+
+**Fields:**  
+| Field   | Description                                | Example               |
+|---------|--------------------------------------------|-----------------------|
+| `name`  | The name of the to-do list entity.         | `my_todo_list_entity` |
+| `item`  | The name of the item to mark as completed. | `Buy groceries`       |
+
+**Example Command:**  
+"Mark 'Buy groceries' as completed on my to-do list."
 
 ---
 
@@ -129,14 +135,6 @@ Fetches and lists calendar events for a specified date range.
 
 2. **Adjustments:**
    - Replace placeholder entity IDs with your actual device/entity IDs in the scripts.
-
-### Multi-Room Vacuum Script Setup
-1. **Home Assistant Helper:**
-   - Create an `input_number` entity named `input_number.vacuum_clean_area`.
-
-2. **Node-RED Setup:**
-   - Import the provided Node-RED flow.
-   - Ensure the flow manages `input_number.vacuum_clean_area` for multi-room cleaning.
 
 ---
 
