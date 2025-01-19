@@ -19,12 +19,8 @@ variables:
       21
     {% elif room == 'Kids room' or room == 'Dětský pokoj' %}
       16
-    {% elif room == 'Bathroom' or room == 'Koupelna' %}
-      100
-    {% elif room == 'Balcon' or room == 'Balkón' %}
-      0
     {% else %}
-      99
+      0
     {% endif %}
 sequence:
   - data:
