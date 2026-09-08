@@ -1,5 +1,7 @@
 # HA Voice Assist Custom Scripts
 
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/matata86)
+
 This repository contains custom scripts for Home Assistant that extend its functionality. These scripts are designed to simplify and automate tasks such as controlling devices, managing calendars, controlling a vacuum cleaner, and managing a to-do list, fully optimized for voice assistants.
 
 ---
@@ -150,3 +152,13 @@ Feel free to open issues or create pull requests for improvements or new scripts
 
 ## License
 This repository is licensed under the MIT License.
+
+---
+
+## Podpora
+
+Pomohlo ti to? Kafe autorovi udělá radost ☕
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/matata86)
+
+**https://ko-fi.com/matata86**
