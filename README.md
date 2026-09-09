@@ -2,6 +2,12 @@
 
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/matata86)
 
+[![Open your scripts](https://my.home-assistant.io/badges/scripts.svg)](https://my.home-assistant.io/redirect/scripts/)
+[![Open Voice assistants](https://my.home-assistant.io/badges/voice_assistants.svg)](https://my.home-assistant.io/redirect/voice_assistants/)
+[![Open YAML configuration](https://my.home-assistant.io/badges/developer_yaml.svg)](https://my.home-assistant.io/redirect/developer_yaml/)
+
+The buttons open the matching pages on your own Home Assistant instance: scripts, voice assistants and the YAML page where you reload scripts after adding them.
+
 This repository contains custom scripts for Home Assistant that extend its functionality. These scripts are designed to simplify and automate tasks such as controlling devices, managing calendars, controlling a vacuum cleaner, and managing a to-do list, fully optimized for voice assistants.
 
 ---
@@ -134,9 +140,13 @@ Marks an item on a to-do or tasks list as completed.
 1. **Script Installation:**
    - Copy the `.yaml` files into your Home Assistant configuration.
    - Place them in the `scripts.yaml` or use a dedicated directory.
+   - Reload scripts afterwards: [![Open YAML configuration](https://my.home-assistant.io/badges/developer_yaml.svg)](https://my.home-assistant.io/redirect/developer_yaml/) → *Scripts*.
 
 2. **Adjustments:**
    - Replace placeholder entity IDs with your actual device/entity IDs in the scripts.
+
+3. **Expose the scripts to your assistant:**
+   - [![Open Voice assistants](https://my.home-assistant.io/badges/voice_assistants.svg)](https://my.home-assistant.io/redirect/voice_assistants/) → *Expose* → add the scripts, so the assistant can call them.
 
 ---
 
