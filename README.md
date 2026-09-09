@@ -4,7 +4,7 @@
 
 [![Open your scripts](https://my.home-assistant.io/badges/scripts.svg)](https://my.home-assistant.io/redirect/scripts/)
 [![Open Voice assistants](https://my.home-assistant.io/badges/voice_assistants.svg)](https://my.home-assistant.io/redirect/voice_assistants/)
-[![Open YAML configuration](https://my.home-assistant.io/badges/developer_yaml.svg)](https://my.home-assistant.io/redirect/developer_yaml/)
+[![Open YAML configuration](https://my.home-assistant.io/badges/server_controls.svg)](https://my.home-assistant.io/redirect/server_controls/)
 
 The buttons open the matching pages on your own Home Assistant instance: scripts, voice assistants and the YAML page where you reload scripts after adding them.
 
@@ -140,7 +140,7 @@ Marks an item on a to-do or tasks list as completed.
 1. **Script Installation:**
    - Copy the `.yaml` files into your Home Assistant configuration.
    - Place them in the `scripts.yaml` or use a dedicated directory.
-   - Reload scripts afterwards: [![Open YAML configuration](https://my.home-assistant.io/badges/developer_yaml.svg)](https://my.home-assistant.io/redirect/developer_yaml/) → *Scripts*.
+   - Reload scripts afterwards: [![Open YAML configuration](https://my.home-assistant.io/badges/server_controls.svg)](https://my.home-assistant.io/redirect/server_controls/) → *Scripts*.
 
 2. **Adjustments:**
    - Replace placeholder entity IDs with your actual device/entity IDs in the scripts.
